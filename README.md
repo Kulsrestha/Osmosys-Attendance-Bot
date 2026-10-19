@@ -20,6 +20,6 @@ This bot provides `/checkin` and `/checkout` commands and sends multipart attend
 
 ## Deployment
 
-Configure the same values as environment variables in your hosting dashboard. Use `python bot.py` as the start command and install dependencies from `requirements.txt`. Ensure `photos/1.jpg` is present in the repository, or set `TEST_PHOTO_PATH` to a committed photo path.
+Configure the same values as environment variables in your hosting dashboard. Use `python bot.py` as the start command and install dependencies from `requirements.txt`. Include the `photos/` folder in the repository. Each check-in or check-out request randomly selects one supported image (`.jpg`, `.jpeg`, or `.png`) from that folder. Set `TEST_PHOTO_PATH` only if you want to force a specific image.
 
 To enable API submission, configure `API_BASE_URL`, `API_TOKEN`, `ORGANISATION_ID`, `SITE_ID`, `USER_ID`, coordinates, and `TEST_PHOTO_PATH`. Set `DRY_RUN=false` only when you intend the command to create an attendance record. The bot returns the API status and response.

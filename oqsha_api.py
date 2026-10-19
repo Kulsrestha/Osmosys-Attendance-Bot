@@ -1,4 +1,5 @@
 
+import random
 from pathlib import Path
 
 import requests
@@ -101,12 +102,19 @@ def submit_attendance(status: str) -> str:
             "ORGANISATION_ID, SITE_ID, and USER_ID must be configured."
         )
 
-    photo_path = Path(TEST_PHOTO_PATH)
-
-    if not photo_path.is_file():
-        raise FileNotFoundError(
-            f"Test photo not found: {photo_path}"
+    if TEST_PHOTO_PATH:
+        photo_path = Path(TEST_PHOTO_PATH)
+        if not photo_path.is_file():
+            raise FileNotFoundError(f"Test photo not found: {photo_path}")
+    else:
+        photo_folder = Path(__file__).resolve().parent / "photos"
+        photo_options = sorted(
+            path for path in photo_folder.iterdir()
+            if path.is_file() and path.suffix.lower() in {".jpg", ".jpeg", ".png"}
         )
+        if not photo_options:
+            raise FileNotFoundError(f"No supported photos found in {photo_folder}")
+        photo_path = random.choice(photo_options)
 
     data = {
         "attendanceStatus": status,
